@@ -3,9 +3,11 @@ import { useSelector, useDispatch } from 'react-redux'
 const App = () => {
   const anecdotes = useSelector(state => state)
   const dispatch = useDispatch()
+  console.log(anecdotes)
 
   const vote = (id) => {
     console.log('vote', id)
+    dispatch({type:'VOTE', id })
   }
 
   return (
