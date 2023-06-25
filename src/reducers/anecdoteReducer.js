@@ -1,4 +1,7 @@
-const anecdotesAtStart = [
+import { createSlice } from "@reduxjs/toolkit";
+import anecdoteService from "../services/anecdoteService";
+
+/*const anecdotesAtStart = [
   'If it hurts, do it more often',
   'Adding manpower to a late software project makes it later!',
   'The first 90 percent of the code accounts for the first 90 percent of the development time...The remaining 10 percent of the code accounts for the other 90 percent of the development time.',
@@ -7,32 +10,63 @@ const anecdotesAtStart = [
   'Debugging is twice as hard as writing the code in the first place. Therefore, if you write the code as cleverly as possible, you are, by definition, not smart enough to debug it.'
 ]
 
-const getId = () => (100000 * Math.random()).toFixed(0)
+const getId = () => (100000 * Math.random()).toFixed(0)*/
 
-const asObject = (anecdote) => {
-  return {
-    content: anecdote,
-    id: getId(),
-    votes: 0
+
+const anecdoteSlice = createSlice({
+  name:'anecdotes',
+  initialState: [],
+  reducers:{
+    vote(state,action){
+      console.log(action)
+      const id = action.payload.id
+      const finalState = state.map(obj => obj.id === id ? action.payload : obj);
+      return finalState
+    },
+    
+    setAll(state,action){
+      const content = action.payload
+      return content
+    },
+    appendAnecdote(state,action){
+      const content = action.payload
+      state.push(content)
+    }
+
+
+  }
+
+})
+export const createNew =(content)=> {
+  return async (dispatch) => {
+    const newObj = {content:content, votes:0}
+    const createResponse = await anecdoteService.create(newObj)
+    dispatch(appendAnecdote(createResponse))
+
   }
 }
 
-const initialState = anecdotesAtStart.map(asObject)
-
-const reducer = (state = initialState, action) => {
-  console.log('state now: ', state)
-  console.log('action', action)
-
-  switch (action.type) {
-    case 'VOTE':
-      const finalState = state.map(obj => obj.id === action.id ? { ...obj, votes: obj.votes + 1 } : obj);
-      console.log(finalState)
-      return finalState;
-
-    default:
-      return state
+export const addVote =(anecdote)=> {
+  return async (dispatch)=>{
+    const response = await anecdoteService.vote(anecdote)
+    dispatch(vote(response))
   }
-
 }
 
-export default reducer
+export const initialize=()=>{
+  return async (dispatch) => {
+    const response = await anecdoteService.getAll()
+    console.log("🚀 ~ file: anecdoteReducer.js:59 ~ return ~ response:", response)
+    
+   dispatch(setAll(response))
+  }
+}
+
+
+
+
+
+
+
+export const {vote,setAll,appendAnecdote} = anecdoteSlice.actions
+export default anecdoteSlice.reducer
