@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { BrowserRouter as Router,Routes,Route,useMatch, useNavigate } from 'react-router-dom'
+import {Routes,Route,useMatch, useNavigate } from 'react-router-dom'
 
 import About from './components/About'
 import AnecdoteList from './components/AnecdoteList'
