@@ -20,7 +20,7 @@ const anecdoteSlice = createSlice({
     vote(state,action){
       console.log(action)
       const id = action.payload.id
-      const finalState = state.map(obj => obj.id === id ? action.payload : obj);
+      const finalState = state.map(obj => obj.id === id ? {...obj,likes:action.payload.likes} : obj);
       return finalState
     },
     
@@ -31,6 +31,12 @@ const anecdoteSlice = createSlice({
     appendAnecdote(state,action){
       const content = action.payload
       state.push(content)
+    },
+    deleteAnecdote(state,action){
+      const content = action.payload
+      const finalState = state.filter(blog => blog.id !== content.id)
+      console.log("🚀 ~ file: anecdoteReducer.js:38 ~ deleteAnecdote ~ finalState:", finalState)
+      return finalState
     }
 
 
@@ -39,7 +45,8 @@ const anecdoteSlice = createSlice({
 })
 export const createNew =(content)=> {
   return async (dispatch) => {
-    const newObj = {content:content, votes:0}
+    const newObj = {...content, likes:0}
+    console.log("🚀 ~ file: anecdoteReducer.js:50 ~ return ~ newObj:", newObj)
     const createResponse = await anecdoteService.create(newObj)
     dispatch(appendAnecdote(createResponse))
 
@@ -61,6 +68,14 @@ export const initialize=()=>{
    dispatch(setAll(response))
   }
 }
+export const deleteBlog =(anecdote) => {
+  return async (dispatch)=>{
+    const response = await anecdoteService.deleteblog(anecdote)
+    console.log("🚀 ~ file: anecdoteReducer.js:73 ~ return ~ response:", response)
+    
+    dispatch(deleteAnecdote(response))
+  }
+}
 
 
 
@@ -68,5 +83,5 @@ export const initialize=()=>{
 
 
 
-export const {vote,setAll,appendAnecdote} = anecdoteSlice.actions
+export const {vote,setAll,appendAnecdote,deleteAnecdote} = anecdoteSlice.actions
 export default anecdoteSlice.reducer

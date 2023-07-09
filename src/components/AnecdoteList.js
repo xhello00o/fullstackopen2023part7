@@ -1,44 +1,39 @@
-import { useSelector, useDispatch } from 'react-redux'
-import { addVote } from '../reducers/anecdoteReducer'
-import { setNotification } from "../reducers/VisibleNotifReducer"
+import { useSelector } from 'react-redux'
+import { Link, Route, Routes, useNavigate } from 'react-router-dom'
+import CreateForm from './AnecdoteForm'
+
 
 
 const AnecdotesList =()=>{
+    const navigate = useNavigate()
     const anecdotes = useSelector(({anecdotes,filterInput}) => {
         console.log("selector",anecdotes)
         if (filterInput ==="") {
-            return [...anecdotes].sort((a,b) => b.votes - a.votes )}
+            return [...anecdotes].sort((a,b) => b.likes - a.likes )}
         else {
             const filteredAnecdotes = anecdotes.filter(each => each.content.toLowerCase().includes(filterInput.toLowerCase()))
-            return filteredAnecdotes.sort((a,b) => b.votes - a.votes )}
+            return filteredAnecdotes.sort((a,b) => b.likes - a.likes )}
         } )
 
 
         
-  const dispatch = useDispatch()
+ 
   console.log(anecdotes)
 
-   const addvote = async(anecdote) => {
-    console.log('vote', anecdote)
-   
-    
-    dispatch(addVote(anecdote)) 
-    dispatch(setNotification(`you voted for '${anecdote.content}'`,5))
+
+  const handleRedirect =(event)=>{
+    navigate('/create')    
   }
+
+  
   return (
     <div>
-    <h2>Anecdotes</h2>
-      {anecdotes.map(anecdote =>
-        <div key={anecdote.id}>
-          <div>
-            {anecdote.content}
-          </div>
-          <div>
-            has {anecdote.votes}
-            <button onClick={() => addvote(anecdote)}>vote</button>
-          </div>
-        </div>
-      )}
+      <h2>Anecdotes</h2>
+      <button onClick={handleRedirect}> Create New Blog</button>
+      {anecdotes.map(blog =>
+      <div key={blog.id}>
+        <Link to={`/blogs/${blog.id}`}>{blog.title}</Link>
+      </div>)}
       </div>
   )
 }
