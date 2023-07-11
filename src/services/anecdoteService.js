@@ -46,4 +46,16 @@ const deleteblog = async (obj) => {
 
 }
 
-export default { getAll, create,vote,deleteblog,setToken}
+const addComment = async (blogid,comment) => {
+    console.log("🚀 ~ file: anecdoteService.js:50 ~ addComment ~ comment:", comment)
+    const config = { 
+        headers: { Authorization:token }
+    }   
+    const response = await axios.post(`${baseUrl}/${blogid}/comments`,{comment},config)
+    
+    console.log("🚀 ~ file: anecdoteService.js:56 ~ addComment ~ response:", response)
+    return response.data
+}
+
+
+export default { getAll, create,vote,deleteblog,setToken,addComment}

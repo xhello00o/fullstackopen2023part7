@@ -7,12 +7,15 @@ import { initialize } from "./reducers/anecdoteReducer";
 import { useEffect } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import Login from "./components/Login";
-import { checklogin } from "./reducers/loginReducer";
+import { checklogin, setUser } from "./reducers/loginReducer";
 import { useSelector } from "react-redux";
 import LoggedUser from "./components/LoggedUser";
 import Users from "./components/Users";
 import User from "./components/User";
 import Blog from "./components/Blog";
+
+
+
 
 const App = () => {
   const dispatch = useDispatch();
@@ -32,6 +35,7 @@ const App = () => {
     return auth;
   });
 
+
   console.log(user.user, "test");
 
   user.user ? console.log("logged in") : console.log("not logged in");
@@ -42,12 +46,12 @@ const App = () => {
     return(
     <div>
       <LoggedUser/>
+      <Notification />
       <Routes>
         <Route path="/users/:id" element={<User/>}/>
         <Route path ="/*" element={
         <div>
           <AnecdotesList/>
-          <Filter/>
         </div>}/>
         <Route path={'/create'} element={<CreateForm/>}  /> 
         <Route path="/blogs/:id" element={<Blog/>}/>
@@ -57,8 +61,9 @@ const App = () => {
   }
 
   return (
-    <div>
-      <Notification />
+    <div className="container">
+       
+      
       <Routes>
         <Route
           path="*"
@@ -75,7 +80,7 @@ const App = () => {
           element={user.user ? <Navigate replace={true} to="/" /> : <Login />}
         />
       </Routes>
-    </div>
+      </div>
   );
 };
 

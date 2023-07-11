@@ -24,13 +24,15 @@ const CreateForm =() =>{
 
         
         dispatch(createNew(content)) 
-        dispatch(setNotification(`you added '${content.title}'`))
+        dispatch(setNotification(`you added '${content.title}'`,3000))
+        navigate('/')
    
       }
     const handleCancel =(event) => {
       event.target.newTitle.value =''
       event.target.newURL.value =''
       navigate('/')
+      
 
     }
 
@@ -39,7 +41,7 @@ const CreateForm =() =>{
       <div>
         <h2>create new</h2>
         <form onSubmit={addNew} onReset={handleCancel}>
-        <div>Title:<input name={'newTitle'} /></div>
+        <div>Title:<input name={'newTitle'}  /></div>
         <div>URL:<input name={'newURL'} /></div>
         <button type='submit'>create</button>
         <button type='reset'>cancel</button>

@@ -1,6 +1,8 @@
 import { useSelector } from 'react-redux'
-import { Link, Route, Routes, useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import { ListGroup,Button,Accordion } from 'react-bootstrap'
 import CreateForm from './AnecdoteForm'
+
 
 
 
@@ -29,10 +31,18 @@ const AnecdotesList =()=>{
   return (
     <div>
       <h2>Anecdotes</h2>
-      <button onClick={handleRedirect}> Create New Blog</button>
+      <Accordion >
+        <Accordion.Item  eventKey='createNewBlog'>
+          <Accordion.Header >Create New Blog</Accordion.Header>
+          <Accordion.Body as={CreateForm}/>
+        </Accordion.Item>
+      </Accordion>
+      
       {anecdotes.map(blog =>
       <div key={blog.id}>
-        <Link to={`/blogs/${blog.id}`}>{blog.title}</Link>
+        <ListGroup>
+        <ListGroup.Item as={Link} to={`/blogs/${blog.id}`} action > {blog.title}</ListGroup.Item>
+        </ListGroup>
       </div>)}
       </div>
   )

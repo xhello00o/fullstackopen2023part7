@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import anecdoteService from "../services/anecdoteService";
+import { async } from "q";
 
 /*const anecdotesAtStart = [
   'If it hurts, do it more often',
@@ -37,6 +38,14 @@ const anecdoteSlice = createSlice({
       const finalState = state.filter(blog => blog.id !== content.id)
       console.log("🚀 ~ file: anecdoteReducer.js:38 ~ deleteAnecdote ~ finalState:", finalState)
       return finalState
+    },
+    addComments(state,action){
+      console.log("🚀 ~ file: anecdoteReducer.js:43 ~ addComments ~ action:", action)
+      const blogid = action.payload.id
+      const comment = action.payload.comment
+      const finalstate = state.map(obj => obj.id === blogid? {...obj, comment:obj.comment.concat(comment)}: obj )
+      console.log("🚀 ~ file: anecdoteReducer.js:47 ~ addComments ~ finalstate:", finalstate)
+      return finalstate
     }
 
 
@@ -77,11 +86,21 @@ export const deleteBlog =(anecdote) => {
   }
 }
 
+export const addNewComments = (blogid,comment) => {
+  return async (dispatch) => {
+    const response = await anecdoteService.addComment(blogid,comment)
+    console.log("🚀 ~ file: anecdoteReducer.js:90 ~ addNewComments ~ response:", response)
+    dispatch(addComments({
+      id:response.blog,
+      comment:response
+  }))
+} }
 
 
 
 
 
 
-export const {vote,setAll,appendAnecdote,deleteAnecdote} = anecdoteSlice.actions
+
+export const {vote,setAll,appendAnecdote,deleteAnecdote,addComments} = anecdoteSlice.actions
 export default anecdoteSlice.reducer

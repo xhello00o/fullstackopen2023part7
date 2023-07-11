@@ -1,5 +1,6 @@
 
 import { useSelector } from 'react-redux'
+import { Alert } from 'react-bootstrap'
 
 const Notification = () => {
   const notification = useSelector(({ notification }) => notification)
@@ -14,9 +15,9 @@ const Notification = () => {
   return (
     <div>
       {notification !== ""
-        ? (<div style={style}>
+        ? (<Alert transition variant="success" >
           {notification}
-        </div>)
+        </Alert>)
         : <div></div>}
     </div>
   )

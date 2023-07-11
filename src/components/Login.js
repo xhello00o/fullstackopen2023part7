@@ -1,16 +1,11 @@
 import { useDispatch } from "react-redux";
 import { login } from "../reducers/loginReducer";
-import { useSelector } from "react-redux";
-import { setNotification } from "../reducers/VisibleNotifReducer";
-import Notification from "./Notification";
+
+
 
 const Login = (props) => {
     const dispatch = useDispatch()
-    const user = useSelector(({ auth }) => {
-        console.log("AppSelector", auth)
-        return auth
-    
-      })
+
     const handlelogin= async(event)=>{
         event.preventDefault()
         const username = event.target.username.value

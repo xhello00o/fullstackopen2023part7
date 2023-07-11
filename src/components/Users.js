@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom"
 import { useSelector } from "react-redux"
+import { Table } from "react-bootstrap"
 
 
 const Users =()=>{
@@ -19,22 +20,26 @@ const Users =()=>{
     return (
         <div>
             <h2>Users</h2>
-            <table> 
+            <Table striped="columns" hover> 
+                <thead>
                 <tr>
                     <th> </th>
                     <th>blogs created</th>
                 </tr>
+                </thead> 
             {userblogs.map(user =>{
             return(
-                <tr key={user.id}>
+                <tbody key={user.id}>
+                     <tr >
                       <td><Link to={`/users/${user.id}`}> {user.name} </Link></td>
                       <td>{user.num} </td>
                       </tr>
+                </tbody>
             )
         })}
 
 
-            </table>
+            </Table>
         
         </div>
         
