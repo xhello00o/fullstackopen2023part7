@@ -1,18 +1,20 @@
-import { useDispatch } from "react-redux"
-import { addNewComments } from "../reducers/anecdoteReducer"
 import { Button, Form, ListGroup } from "react-bootstrap"
+import { useNotificationDispatch } from "../NotificationContext"
 
 
-const Comments =({blog})=> {
+const Comments =({blog,commentMutation})=> {
     console.log("🚀 ~ file: Comments.js:6 ~ Comments ~ blog:", blog)
-    const dispatch = useDispatch()
+    const notificationDispatch = useNotificationDispatch()
 
     const handleComment = (event) => {
         event.preventDefault()
         const newComment = event.target.comment.value
         console.log("🚀 ~ file: Comments.js:11 ~ handleComment ~ newComment:", newComment)
         event.target.comment.value =""
-        dispatch(addNewComments(blog.id,newComment))
+        commentMutation.mutate({blogid:blog.id,comment: newComment})
+        setTimeout(() => {
+            notificationDispatch({type:"removeMessage"})
+          }, 3000)
 
     }
 

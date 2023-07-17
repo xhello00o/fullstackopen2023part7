@@ -1,12 +1,11 @@
+import { Alert, Snackbar } from '@mui/material'
+import { useNotification } from '../NotificationContext'
 
-import { useSelector } from 'react-redux'
-import { Alert } from 'react-bootstrap'
 
 const Notification = () => {
-  const notification = useSelector(({ notification }) => notification)
+  const notification = useNotification()
   console.log("notif",notification)
   
-
   const style = {
     border: 'solid',
     padding: 10,
@@ -14,11 +13,18 @@ const Notification = () => {
   }
   return (
     <div>
-      {notification !== ""
-        ? (<Alert transition variant="success" >
+      
+        <Snackbar anchorOrigin={{
+          vertical:'top',
+          horizontal:'center'
+        }} open={notification !== ""} 
+        >
+          <Alert severity='success'> 
           {notification}
-        </Alert>)
-        : <div></div>}
+
+          </Alert>
+        </Snackbar>
+        
     </div>
   )
 }

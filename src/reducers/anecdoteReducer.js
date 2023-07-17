@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import anecdoteService from "../services/anecdoteService";
+import anecdoteService from "../requests/blogService";
 import { async } from "q";
 
 /*const anecdotesAtStart = [

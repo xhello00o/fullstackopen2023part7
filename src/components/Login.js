@@ -1,10 +1,26 @@
-import { useDispatch } from "react-redux";
-import { login } from "../reducers/loginReducer";
+import loginService from "../requests/loginService";
+import { useMutation } from "react-query";
+import { useUserDispatch } from "../UserContext";
+import blogService from "../requests/blogService";
+import { useNotificationDispatch } from "../NotificationContext";
 
 
 
 const Login = (props) => {
-    const dispatch = useDispatch()
+    const userDispatch = useUserDispatch()
+    const notificationDispatch = useNotificationDispatch()
+    const loginMutation = useMutation(
+        loginService.login,
+        {onSuccess:(loginRes)=>{
+            userDispatch({type:'setUser',payload:loginRes})
+            window.localStorage.setItem('loggedUser', JSON.stringify(loginRes))
+            blogService.setToken(loginRes.token)
+        },
+    onError:(error) => {
+        console.log("🚀 ~ file: Login.js:20 ~ Login ~ error:", error)
+        notificationDispatch({type:"setMessage",payload:error.response.data.error})
+    }}
+    )
 
     const handlelogin= async(event)=>{
         event.preventDefault()
@@ -13,8 +29,12 @@ const Login = (props) => {
         console.log(username,password)
         event.target.username.value =''
         event.target.password.value=''
-        dispatch(login({username,password}))
-
+        loginMutation.mutate({username,password})
+        setTimeout(() => {
+            notificationDispatch({type:"removeMessage"})
+          }, 3000)
+        
+        
     }
     const handleClear = (event) => {
         event.preventDefault()
@@ -23,7 +43,6 @@ const Login = (props) => {
         event.target.password.value=''
     }
 
-    
     
       
 

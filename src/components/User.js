@@ -1,12 +1,14 @@
-import { useSelector } from "react-redux";
+import { useQueryClient } from "react-query";
 import { useParams } from "react-router";
 
 const User = () => {
   const id = useParams().id;
   console.log("🚀 ~ file: User.js:9 ~ User ~ id:", id);
-  const blogs = useSelector(({ anecdotes, auth }) => {
-    return anecdotes.filter((blog) => blog.user.id === id);
-  });
+  const queryClient = useQueryClient()
+  const blogs = queryClient.getQueryData('blogs').filter((blog) => {
+      return blog.user.id === id
+  })
+  console.log("🚀 ~ file: User.js:10 ~ User ~ blogs:", blogs)
   if (blogs.length===0){
     return null
   }
