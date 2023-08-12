@@ -38,9 +38,7 @@ export const login = (credentials) => {
             dispatch(setUser({user:null,
                 error:err.response.data.error}))
             dispatch(setNotification(err.response.data.error,3000))
-        }
-        
-        
+        }  
     }
 
 }
