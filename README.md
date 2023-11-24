@@ -3,9 +3,9 @@
 The seventh part of the course touches on several different themes. First, we'll get familiar with React router. React router helps us divide the application into different views that are shown based on the URL in the browser's address bar. After this, we'll look at a few more ways to add CSS styles to React applications. During the entire course, we've used Vite to generate the body of our applications. It is also possible to configure the whole toolchain yourself, and in this part we will see how this can be done with a tool called Webpack. We shall also have a look at hook functions and how to define a custom hook.
 
 - [Exercises 7.1 - 7.6](#react-router--exercise-71---73-): [```main```](https://github.com/xhello00o/fullstackopen2023part7/tree/main/)
-- [Exercises 7.7](#custom-hooks--exercises-74---78-): [```part7.7_country_hook```](https://github.com/xhello00o/fullstackopen2023part7/blob/part7.7_country_hook/)
+- [Exercises 7.7](#exercise-77-country-hook): [```part7.7_country_hook```](https://github.com/xhello00o/fullstackopen2023part7/blob/part7.7_country_hook/)
 - [Exercises 7.8](#ultimatehook): [```part7.8_ultimate_hook```](https://github.com/xhello00o/fullstackopen2023part7/blob/part7.8_ultimate_hook/)
-- [Exercises 7.9 - 7.20](#exercises-extending-the-bloglist-exercises-7-9---7-20-):
+- [Exercises 7.9 - 7.20](#exercises-extending-the-bloglist--exercises-79---720-):
   - [```redux_bloglist```](https://github.com/xhello00o/fullstackopen2023part7/blob/redux_bloglist) : done with ```react-redux``` and ```react-bootstrap```
   - [```part7.10-7.13_react_query_context_bloglist```](https://github.com/xhello00o/fullstackopen2023part7/blob/part7.10-7.13_react_query_context_bloglist): done with ```react-query``` and ```@mui/material```
 
