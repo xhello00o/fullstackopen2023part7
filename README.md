@@ -2,12 +2,19 @@
 ## Course Content
 The seventh part of the course touches on several different themes. First, we'll get familiar with React router. React router helps us divide the application into different views that are shown based on the URL in the browser's address bar. After this, we'll look at a few more ways to add CSS styles to React applications. During the entire course, we've used Vite to generate the body of our applications. It is also possible to configure the whole toolchain yourself, and in this part we will see how this can be done with a tool called Webpack. We shall also have a look at hook functions and how to define a custom hook.
 
-### React Router ( Exercise 7.1 - 7.3 )
+- [Exercises 7.1 - 7.6](#react-router--exercise-71---73-): [```main```](https://github.com/xhello00o/fullstackopen2023part7/tree/main/)
+- [Exercises 7.7](#custom-hooks--exercises-74---78-): [```part7.7_country_hook```](https://github.com/xhello00o/fullstackopen2023part7/blob/part7.7_country_hook/)
+- [Exercises 7.8](#ultimatehook): [```part7.8_ultimate_hook```](https://github.com/xhello00o/fullstackopen2023part7/blob/part7.8_ultimate_hook/)
+- [Exercises 7.9 - 7.20](#exercises-extending-the-bloglist-exercises-7-9---7-20-):
+  - [```redux_bloglist```](https://github.com/xhello00o/fullstackopen2023part7/blob/redux_bloglist) : done with ```react-redux``` and ```react-bootstrap```
+  - [```part7.10-7.13_react_query_context_bloglist```](https://github.com/xhello00o/fullstackopen2023part7/blob/part7.10-7.13_react_query_context_bloglist): done with ```react-query``` and ```@mui/material```
+
+## React Router ( Exercise 7.1 - 7.3 )
 ```react-router-dom``` is used for routing between pages. Its benefit is that it can route pages while also changing the URL. This allow for navigating between webpages through the URL without loading new content from the server as the route are done with javascript. An Anecdote list application was created with 4 pages; About page, Anecdotes List page, Single Anecdote Page and a Create Anecdote page. ```useMatch``` was used to match the url param id to and to retrieve a single anecdote before rendering, while ```useParams``` also work in the similar way however, ```useParams``` is only rendered after the component is rendered and therefore the anecdote is retrieved after the component is rendered. ```useNavigate``` hook or ```<Navigate>``` component both works in redirecting to a specific link.
 
 The code for this section is in the [```main```](https://github.com/xhello00o/fullstackopen2023part7/tree/main/) branch.
 
-### Custom Hooks ( Exercises 7.4 - 7.8 )
+## Custom Hooks ( Exercises 7.4 - 7.8 )
 React allows use to create our own custom hooks. However there are some rules to abide by. These rules can be enforced using an ```eslint``` rule [```eslint-plugin-react-hook```](https://www.npmjs.com/package/eslint-plugin-react-hooks).
 - The useState function (as well as the useEffect function introduced later on in the course) must not be called from inside of a loop, a conditional expression, or any place that is not a function defining component.
 
@@ -57,8 +64,8 @@ const useCountry = (name) => {
     return country
   }
 ```
-
-### Exercise 7.8 Ultimate Hook
+<a name="ultimatehook"></a>
+#### Exercise 7.8 Ultimate Hook
 A separate Notes app was made. A new ```useResources``` hook was created. It is used to take in a API URL and ```useEffect``` hook within to fetch the resources and save it to state. A separate create function was also created within the ```useResources``` hook to handle POST request for new resource creation.
 ```javascript
 const useResource = (baseUrl) => {
@@ -85,6 +92,7 @@ const useResource = (baseUrl) => {
     ]
   }
 ```
+
 ## More about Styles
 These 2 styles are used to make 2 separate designs of the same apps which will be covered in the final section. More different styles can be found [here](
 - Google MaterialUI
@@ -258,6 +266,7 @@ const config = (env, argv) => {
   }
 }
 ```
+
 ### Polyfill
 The IE browser do not support more advanced feature such as promises etc. Therefore polyfill such as ```promise-polyfill``` is required to enable IE browser compatibility. The following code has to be added to the application code index.js. One exhaustive list of existing polyfills can be found [here](https://github.com/Modernizr/Modernizr/wiki/HTML5-Cross-browser-Polyfills).
 The browser compatibility of different APIs can be checked by visiting https://caniuse.com or [Mozilla's website](https://developer.mozilla.org/en-US/).
@@ -268,3 +277,42 @@ if (!window.Promise) {
   window.Promise = PromisePolyfill
 }
 ```
+## CLass Component
+Previous versions of react uses this class component. Though, there are many cases of old react code around, there is no need to update it to the latest functional components. ```componentDidMount``` was used to load or fetch data once just like ```useEffect```.
+```javascript
+class App extends React.Component {
+  constructor(props) {
+    super(props)
+
+
+    this.state = {
+      anecdotes: [],
+      current: 0
+    }
+  }
+
+  render() {
+
+    if (this.state.anecdotes.length === 0) {
+      return <div>no anecdotes...</div>
+    }
+
+    return (
+      <div>
+        <h1>anecdote of the day</h1>
+
+        <div>
+          {this.state.anecdotes[this.state.current].content}
+        </div>
+        <button>next</button>
+      </div>
+    )
+  }
+}
+```
+## Exercises: extending the bloglist ( Exercises 7.9 - 7.20 ) 
+These exercises build on the bloglist app that was created in the previous few parts. In this section, we will be using ```redux``` and ```react-query``` as state managements individually for 2 separate bloglist apps. The Redux Bloglist app is done with ```react-bootstrap```, whereas the React-query bloglist app is done using ```materialui```.
+
+#### Branches
+- [```redux_bloglist```](https://github.com/xhello00o/fullstackopen2023part7/blob/redux_bloglist) : done with ```react-redux``` and ```react-bootstrap```
+- [```part7.10-7.13_react_query_context_bloglist```](https://github.com/xhello00o/fullstackopen2023part7/blob/part7.10-7.13_react_query_context_bloglist): done with ```react-query``` and ```@mui/material```
